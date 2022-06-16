@@ -18,36 +18,36 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Cacheable(value = "product")
-    public List<Product> getAllProducts(){
-        try{
+    public List<Product> getAllProducts() {
+        try {
             Thread.sleep(5000);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        List<Product> products =  productRepository.findAll();
+        List<Product> products = productRepository.findAll();
         log.info("Loading data from DB!!!");
         return products;
     }
 
     @Cacheable(value = "product")
-    public Optional<Product> getProductById(Long id){
-        try{
+    public Optional<Product> getProductById(Long id) {
+        try {
             Thread.sleep(5000);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Optional<Product> product = productRepository.findById(id);
-        log.info("Loading data from DB : "+product);
+        log.info("Loading data from DB : " + product);
         return product;
     }
 
     @CacheEvict(value = "product", allEntries = true)
-    public Product saveProduct(Product product){
+    public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
     @CacheEvict(value = "product", allEntries = true)
-    public Product updateProduct(Long id, Product newProduct){
+    public Product updateProduct(Long id, Product newProduct) {
         Product product = getProductById(id).get();
         product.setPrice(newProduct.getPrice());
         product.setProductName(newProduct.getProductName());
